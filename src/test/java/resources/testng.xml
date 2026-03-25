@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite">
+
+    <listeners>
+        <listener class-name="org.avenga.config.ExtentListener"/>
+    </listeners>
+
+    <test verbose="2" preserve-order="true" name="[TS_001] Books">
+        <classes>
+            <class name="org.avenga.tests.TS_001_Books">
+                <methods>
+                    <include name="TC_001_GetAllBooks"/>
+                    <include name="TC_002_GetBookByID"/>
+                    <include name="TC_003_AddBook"/>
+                    <include name="TC_004_UpdateBook"/>
+                    <include name="TC_005_DeleteBook"/>
+                    <include name="TC_006_GetBookWithInvalidId"/>
+                    <include name="TC_007_AddBookWithInvalidPayload"/>
+                    <include name="TC_008_UpdateBookWithInvalidPayload"/>
+                    <include name="TC_009_DeleteNonExistingBook"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test verbose="2" preserve-order="true" name="[TS_002] Authors">
+        <classes>
+            <class name="org.avenga.tests.TS_002_Authors">
+                <methods>
+                    <include name="TC_001_GetAllAuthors"/>
+                    <include name="TC_002_GetAuthorByID"/>
+                    <include name="TC_003_AddAuthor"/>
+                    <include name="TC_004_UpdateAuthor"/>
+                    <include name="TC_005_DeleteAuthor"/>
+                    <include name="TC_006_GetAuthorWithInvalidId"/>
+                    <include name="TC_007_AddAuthorWithInvalidPayload"/>
+                    <include name="TC_008_UpdateAuthorWithInvalidPayload"/>
+                    <include name="TC_009_DeleteNonExistingAuthor"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
