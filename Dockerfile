@@ -6,4 +6,4 @@ COPY . .
 
 RUN mvn clean install -DskipTests
 
-CMD ["mvn", "test"]
+CMD ["mvn", "test", "-Dsurefire.suiteXmlFiles=src/test/java/resources/testng.xml"]
