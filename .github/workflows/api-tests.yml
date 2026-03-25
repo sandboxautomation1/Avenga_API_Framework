@@ -28,9 +28,7 @@ jobs:
 
       - name: Run tests in Docker
         run: |
-          docker run \
-          -e BASE_URL=https://fakerestapi.azurewebsites.net \
-          api-tests
+          docker run -e BASE_URL=https://fakerestapi.azurewebsites.net api-tests
 
       - name: Upload test report
         if: always()
