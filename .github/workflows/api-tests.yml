@@ -3,8 +3,6 @@ name: API Automation Tests
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build-and-test:
@@ -20,15 +18,17 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build project
-        run: mvn clean install -DskipTests
-
       - name: Build Docker image
         run: docker build -t api-tests .
 
       - name: Run tests in Docker
+        run: docker run api-tests
+
+      - name: Copy reports from container
         run: |
-          docker run -e BASE_URL=https://fakerestapi.azurewebsites.net api-tests
+          docker create --name temp-container api-tests
+          docker cp temp-container:/app/test-output ./test-output
+          docker rm temp-container
 
       - name: Upload test report
         if: always()

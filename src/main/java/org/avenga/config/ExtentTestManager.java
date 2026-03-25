@@ -13,7 +13,6 @@ public class ExtentTestManager {
     public static void startTest() {
         ExtentTest extentTest = ExtentManager.getInstance().createTest("<b>" + ExtentListener.getTestName() + "</b>",
                 "<pre>"
-                        + "<center><b>* * * * * * * *    I N F O R M A T I O N    * * * * * * * *</b></center>"
                         + "<p align=justify>"
                         + ExtentListener.getTestDescription()
                         + "</p>"

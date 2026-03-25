@@ -38,6 +38,8 @@ public class ExtentListener implements ITestListener {
                 .getAnnotation(Test.class);
 
         setTestName(testAnnotation.testName());
+        setTestDescription(result.getMethod().getDescription());
+
         if (testName == null || testName.isEmpty()) {
             testName = result.getMethod().getMethodName(); // fallback
         }
@@ -47,7 +49,6 @@ public class ExtentListener implements ITestListener {
         String[] groups = result.getMethod().getGroups();
         String category = groups[0];
         ExtentTestManager.getTest().assignCategory(category);
-        setTestDescription(result.getMethod().getDescription());
     }
 
     @Override
