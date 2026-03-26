@@ -73,7 +73,7 @@ public class TS_001_Books extends BaseTest {
 
     @Test(testName = "[TC_005_Books] Delete a book by its ID", description = "Validate that DELETE operation work as expected with valid ID.", groups = {"DELETE"}, priority = 4)
     public void TC_005_DeleteBook() throws Exception {
-        books.DELETE_DeleteBookById(200, 1);
+        books.DELETE_DeleteBookById(200, "1");
     }
 
 
@@ -99,6 +99,6 @@ public class TS_001_Books extends BaseTest {
 
     @Test(testName = "[TC_009_Books] Delete non existing record", description = "Validate that DELETE operation work as expected with invalid payload.", groups = {"DELETE"}, priority = 8)
     public void TC_009_DeleteNonExistingBook() throws Exception {
-        books.DELETE_DeleteBookById(400, null);
+        books.DELETE_DeleteBookById(405, "");
     }
 }

@@ -37,7 +37,8 @@ public class Authors {
     public Response GET_AuthorById(int expectedStatusCode, Integer id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .pathParam("id", id)
                 .when()
                 .get();
 
@@ -51,10 +52,11 @@ public class Authors {
 
 
     /** Update an existing author’s details */
-    public Response PUT_UpdateAuthorById(int expectedStatusCode, JsonObject body, Integer id) throws IOException {
+    public Response PUT_UpdateAuthorById(int expectedStatusCode, JsonObject body, String authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .pathParam("id", authorId)
                 .body(JsonUtils.convertToJsonNode(body))
                 .when()
                 .put();
@@ -69,10 +71,11 @@ public class Authors {
 
 
     /** Delete an author by their ID */
-    public Response DELETE_DeleteAuthorById(int expectedStatusCode, Integer id) throws IOException {
+    public Response DELETE_DeleteAuthorById(int expectedStatusCode, String authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .pathParam("id", authorId)
                 .when()
                 .delete();
 
@@ -107,7 +110,8 @@ public class Authors {
     public Response GET_AllAuthorBooksByBookId(int expectedStatusCode, int bookId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BOOKS + bookId))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BOOKS + "/{bookId}"))
+                .pathParam("bookId", bookId)
                 .when()
                 .get();
 

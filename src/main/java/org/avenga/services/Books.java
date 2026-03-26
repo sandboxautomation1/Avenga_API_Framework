@@ -44,7 +44,8 @@ public class Books {
     public Response GET_BookById(int expectedStatusCode, int id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/{id}"))
+                .pathParam("id", id)
                 .when()
                 .get();
 
@@ -61,7 +62,8 @@ public class Books {
     public Response PUT_UpdateBookById(int expectedStatusCode, JsonObject body, int id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/{id}"))
+                .pathParam("id", id)
                 .body(JsonUtils.convertToJsonNode(body))
                 .when()
                 .put();
@@ -76,10 +78,11 @@ public class Books {
 
 
     /** Delete a book by its ID */
-    public Response DELETE_DeleteBookById(int expectedStatusCode, Integer id) throws IOException {
+    public Response DELETE_DeleteBookById(int expectedStatusCode, String id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/" + id))
+                .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS + "/{id}"))
+                .pathParam("id", id)
                 .when()
                 .delete();
 

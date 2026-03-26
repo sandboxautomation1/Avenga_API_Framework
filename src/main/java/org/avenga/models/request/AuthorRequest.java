@@ -12,20 +12,10 @@ import lombok.Setter;
 public class AuthorRequest {
 
     // GETTERS & SETTERS
-    @Setter
-    @Getter
+
     private int id;
-
-    @Setter
-    @Getter
     private int idBook;
-
-    @Setter
-    @Getter
     private String firstName;
-
-    @Setter
-    @Getter
     private String lastName;
 
     public AuthorRequest() {

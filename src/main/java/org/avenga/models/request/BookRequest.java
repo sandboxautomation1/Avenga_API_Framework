@@ -14,28 +14,11 @@ public class BookRequest {
 
     // GETTERS & SETTERS
 
-    @Setter
-    @Getter
     private int id;
-
-    @Setter
-    @Getter
     private String title;
-
-    @Setter
-    @Getter
     private String description;
-
-    @Setter
-    @Getter
     private int pageCount;
-
-    @Setter
-    @Getter
     private String excerpt;
-
-    @Setter
-    @Getter
     private String publishDate;
 
     public BookRequest() {
