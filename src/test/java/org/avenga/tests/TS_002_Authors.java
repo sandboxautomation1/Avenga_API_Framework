@@ -4,38 +4,59 @@ import com.google.gson.JsonObject;
 import org.avenga.base.BaseTest;
 import org.avenga.config.ExtentListener;
 import org.avenga.models.request.AuthorRequest;
+import org.avenga.models.response.AuthorResponse;
 import org.avenga.services.Authors;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
+
 @Listeners(ExtentListener.class)
 public class TS_002_Authors extends BaseTest {
 
-   Authors authors =  new Authors();
-   AuthorRequest model = new AuthorRequest();
+   Authors  authors =  new Authors();
+   AuthorRequest  request = new AuthorRequest();
+   AuthorResponse response;
 
 
     @Test(testName = "[TC_001_Authors] Retrieve a list of all authors", description = "Ensure the API returns accurate HTTP status codes for valid GET request.", groups = {"GET"}, priority = 0)
     public void TC_001_GetAllAuthors() throws Exception {
-        authors.GET_AllAuthors(200);
+        authors.GET_AllAuthors(200).then().body("size()", greaterThan(0));
     }
 
 
     @Test(testName = "[TC_002_Authors] Retrieve details of a specific author by its ID", description = "Validate that READ operation work as expected with valid ID.", groups = {"GET"}, priority = 1)
     public void TC_002_GetAuthorByID() throws Exception {
-        authors.GET_AuthorById(200, 1);
+        response = authors.GET_AuthorById(200, 1).then().extract().as(AuthorResponse.class);
+
+        assertThat(response.getId(), greaterThan(0));
+        assertThat(response.getIdBook(), notNullValue());
+        assertThat(response.getFirstName(), notNullValue());
+        assertThat(response.getLastName(), notNullValue());
     }
 
 
     @Test(testName = "[TC_003_Authors] Add a new author to the system", description = "Validate that CREATE operation work as expected with valid payload.", groups = {"POST"}, priority = 2)
     public void TC_003_AddAuthor() throws Exception {
-        authors.POST_AddAuthor(200, model.buildRandomAuthorPayload());
+        response = authors.POST_AddAuthor(200, request.buildRandomAuthorPayload()).then().extract().as(AuthorResponse.class);
+
+        assertThat(response.getId(), greaterThan(0));
+        assertThat(response.getIdBook(), notNullValue());
+        assertThat(response.getFirstName(), notNullValue());
+        assertThat(response.getLastName(), notNullValue());
     }
 
 
     @Test(testName = "[TC_004_Authors] Update an existing author’s details by its ID", description = "Validate that UPDATE operation work as expected with valid payload.", groups = {"PUT"}, priority = 3)
     public void TC_004_UpdateAuthor() throws Exception {
-        authors.PUT_UpdateAuthorById(200, model.buildRandomAuthorPayload(), 1);
+        response = authors.PUT_UpdateAuthorById(200, request.buildRandomAuthorPayload(), 1).then().extract().as(AuthorResponse.class);
+
+        assertThat(response.getId(), greaterThan(0));
+        assertThat(response.getIdBook(), notNullValue());
+        assertThat(response.getFirstName(), notNullValue());
+        assertThat(response.getLastName(), notNullValue());
     }
 
 
@@ -53,14 +74,14 @@ public class TS_002_Authors extends BaseTest {
 
     @Test(testName = "[TC_007_Authors] Add a new author with invalid book ID", description = "Validate that CREATE operation work as expected with invalid payload.", groups = {"POST"}, priority = 6)
     public void TC_007_AddAuthorWithInvalidPayload() throws Exception {
-        JsonObject body = model.buildAuthorPayload(1, null, "", "");
+        JsonObject body = request.buildAuthorPayload(1, null, "", "");
         authors.POST_AddAuthor(400, body);
     }
 
 
     @Test(testName = "[TC_008_Authors] Update an existing author’s details with invalid book ID", description = "Validate that UPDATE operation work as expected with invalid payload.", groups = {"PUT"}, priority = 7)
     public void TC_008_UpdateAuthorWithInvalidPayload() throws Exception {
-        JsonObject body = model.buildAuthorPayload(1, 1, "", "");
+        JsonObject body = request.buildAuthorPayload(1, 1, "", "");
         authors.PUT_UpdateAuthorById(400, body, null);
     }
 
