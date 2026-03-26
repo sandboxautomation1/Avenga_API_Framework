@@ -1,18 +1,25 @@
 package org.avenga.services;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.avenga.client.BaseClient;
 import org.avenga.config.WriterOutputStream;
 import org.avenga.data.Endpoints;
-import org.avenga.models.books.Book;
 import org.avenga.utils.JsonUtils;
 
+import java.awt.print.Book;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.avenga.config.WriterOutputStream.writeRequestLog;
 import static org.avenga.config.WriterOutputStream.writeResponseLog;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class Books {
 

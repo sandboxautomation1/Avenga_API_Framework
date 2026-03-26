@@ -49,6 +49,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- Apache Commons IO -->
         <!-- Source: https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>

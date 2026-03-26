@@ -1,6 +1,5 @@
-package org.avenga.models.books;
+package org.avenga.models.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.javafaker.Faker;
 import com.google.gson.JsonObject;
@@ -10,9 +9,8 @@ import lombok.Setter;
 import org.avenga.utils.RandomUtils;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class Book {
+public class BookRequest {
 
     // GETTERS & SETTERS
 
@@ -40,23 +38,13 @@ public class Book {
     @Getter
     private String publishDate;
 
-    public Book() {
+    public BookRequest() {
     }
 
-
-    public Book(int id, String title, String description, int pageCount, String excerpt, String publishDate) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.pageCount = pageCount;
-        this.excerpt = excerpt;
-        this.publishDate = publishDate;
-    }
+    private final Faker faker = new Faker();
 
 
-    private static final Faker faker = new Faker();
-
-    public static JsonObject createBookPayload(int id, String title, String description, int pageCount, String excerpt, String publishDate) {
+    public JsonObject buildBookPayload(int id, String title, String description, int pageCount, String excerpt, String publishDate) {
         JsonObject body = new JsonObject();
         body.addProperty("id", id);
         body.addProperty("title", title);
@@ -67,7 +55,7 @@ public class Book {
         return body;
     }
 
-    public static JsonObject createRandomBookPayload() {
+    public JsonObject buildRandomBookPayload() {
         JsonObject body = new JsonObject();
         body.addProperty("id", faker.number().numberBetween(1000, 9999));
         body.addProperty("title", faker.book().title());

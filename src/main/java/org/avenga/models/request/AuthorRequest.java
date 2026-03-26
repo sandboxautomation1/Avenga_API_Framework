@@ -1,4 +1,4 @@
-package org.avenga.models.authors;
+package org.avenga.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.javafaker.Faker;
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Data
 @JsonInclude(JsonInclude.Include.ALWAYS)
-public class Author {
+public class AuthorRequest {
 
     // GETTERS & SETTERS
     @Setter
@@ -28,21 +28,13 @@ public class Author {
     @Getter
     private String lastName;
 
-    public Author() {
+    public AuthorRequest() {
     }
 
-
-    public Author(int id, int idBook, String firstName, String lastName) {
-        this.id = id;
-        this.idBook = idBook;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private final Faker faker = new Faker();
 
 
-    private static final Faker faker = new Faker();
-
-    public static JsonObject createAuthorPayload(int id, Integer idBook, String firstName, String lastName) {
+    public JsonObject buildAuthorPayload(int id, Integer idBook, String firstName, String lastName) {
         JsonObject body = new JsonObject();
         body.addProperty("firstName", firstName);
         body.addProperty("lastName", lastName);
@@ -51,7 +43,7 @@ public class Author {
         return body;
     }
 
-    public static JsonObject createRandomAuthorPayload() {
+    public JsonObject buildRandomAuthorPayload() {
         JsonObject body = new JsonObject();
         body.addProperty("firstName", faker.name().firstName());
         body.addProperty("lastName", faker.name().lastName());

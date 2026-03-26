@@ -1,14 +1,11 @@
 package org.avenga.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.avenga.client.BaseClient;
 import org.avenga.config.WriterOutputStream;
 import org.avenga.data.Endpoints;
-import org.avenga.models.authors.Author;
 import org.avenga.utils.JsonUtils;
 
 import java.io.IOException;
