@@ -9,26 +9,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.avenga.utils.RandomUtils;
 
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookResponse {
 
-    // GETTERS
-
-    @Getter
     private int id;
-
-    @Getter
     private String title;
-
-    @Getter
     private String description;
-
-    @Getter
     private int pageCount;
-
-    @Getter
     private String excerpt;
-
-    @Getter
     private String publishDate;
 }

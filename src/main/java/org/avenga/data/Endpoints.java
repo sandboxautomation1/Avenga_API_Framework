@@ -1,9 +1,7 @@
 package org.avenga.data;
 
 public class Endpoints {
-
-    public static final String BASE_URL      = "https://fakerestapi.azurewebsites.net";
-
+    
     public static final String ACTIVITIES    = "/api/v1/Activities";
     public static final String AUTHORS       = "/api/v1/Authors";
     public static final String AUTHORS_BOOKS = "/api/v1/Authors/authors/books/";

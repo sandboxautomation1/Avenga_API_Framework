@@ -8,19 +8,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthorResponse {
 
-    // GETTERS
-    @Getter
     private int id;
-
-    @Getter
     private int idBook;
-
-    @Getter
     private String firstName;
-
-    @Getter
     private String lastName;
 }
