@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public class RandomUtils {
+public class DataUtils {
 
     public static String getDate() {
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);

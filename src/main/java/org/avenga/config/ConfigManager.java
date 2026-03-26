@@ -1,9 +1,11 @@
 package org.avenga.config;
 
+import org.avenga.data.Endpoints;
+
 public class ConfigManager {
 
     public static String getBaseUrl() {
-        return getProperty("BASE_URL", "https://fakerestapi.azurewebsites.net");
+        return getProperty("BASE_URL", Endpoints.BASE_URL);
     }
 
     public static String getProperty(String key, String defaultValue) {

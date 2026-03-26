@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.javafaker.Faker;
 import com.google.gson.JsonObject;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.avenga.utils.RandomUtils;
+import org.avenga.utils.DataUtils;
 
 @Data
 @JsonInclude(JsonInclude.Include.ALWAYS)
@@ -45,7 +43,7 @@ public class BookRequest {
         body.addProperty("description", faker.lorem().sentence());
         body.addProperty("pageCount", faker.number().numberBetween(50, 500));
         body.addProperty("excerpt", faker.lorem().paragraph());
-        body.addProperty("publishDate", RandomUtils.getDate());
+        body.addProperty("publishDate", DataUtils.getDate());
         return body;
     }
 }

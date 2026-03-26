@@ -1,18 +1,13 @@
 package org.avenga.tests;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
 import org.avenga.base.BaseTest;
-import org.avenga.config.ExtentListener;
+import org.avenga.reporting.ExtentListener;
 import org.avenga.models.request.BookRequest;
 import org.avenga.models.response.BookResponse;
 import org.avenga.services.Books;
-import org.avenga.utils.JsonUtils;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;

@@ -1,4 +1,4 @@
-package org.avenga.config;
+package org.avenga.reporting;
 
 import lombok.Getter;
 import lombok.Setter;

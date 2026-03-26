@@ -2,7 +2,7 @@ package org.avenga.tests;
 
 import com.google.gson.JsonObject;
 import org.avenga.base.BaseTest;
-import org.avenga.config.ExtentListener;
+import org.avenga.reporting.ExtentListener;
 import org.avenga.models.request.AuthorRequest;
 import org.avenga.models.response.AuthorResponse;
 import org.avenga.services.Authors;

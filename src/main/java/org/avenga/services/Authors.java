@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.avenga.client.BaseClient;
-import org.avenga.config.WriterOutputStream;
+import org.avenga.reporting.WriterOutputStream;
 import org.avenga.data.Endpoints;
 import org.avenga.utils.JsonUtils;
 
 import java.io.IOException;
 
-import static org.avenga.config.WriterOutputStream.writeRequestLog;
-import static org.avenga.config.WriterOutputStream.writeResponseLog;
+import static org.avenga.reporting.WriterOutputStream.writeRequestLog;
+import static org.avenga.reporting.WriterOutputStream.writeResponseLog;
 
 public class Authors {
 
@@ -37,7 +37,7 @@ public class Authors {
     public Response GET_AuthorById(int expectedStatusCode, Integer id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))
                 .pathParam("id", id)
                 .when()
                 .get();
@@ -55,7 +55,7 @@ public class Authors {
     public Response PUT_UpdateAuthorById(int expectedStatusCode, JsonObject body, String authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))
                 .pathParam("id", authorId)
                 .body(JsonUtils.convertToJsonNode(body))
                 .when()
@@ -74,7 +74,7 @@ public class Authors {
     public Response DELETE_DeleteAuthorById(int expectedStatusCode, String authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS + "/{id}"))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))
                 .pathParam("id", authorId)
                 .when()
                 .delete();
@@ -110,7 +110,7 @@ public class Authors {
     public Response GET_AllAuthorBooksByBookId(int expectedStatusCode, int bookId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
-                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BOOKS + "/{bookId}"))
+                .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BOOKS ))
                 .pathParam("bookId", bookId)
                 .when()
                 .get();

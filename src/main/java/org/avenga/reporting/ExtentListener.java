@@ -1,4 +1,4 @@
-package org.avenga.config;
+package org.avenga.reporting;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,10 +6,6 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
-
-import java.util.Arrays;
-
-import static org.avenga.config.ExtentManager.*;
 
 public class ExtentListener implements ITestListener {
 

@@ -1,4 +1,4 @@
-package org.avenga.config;
+package org.avenga.reporting;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;

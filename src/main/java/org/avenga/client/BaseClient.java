@@ -9,11 +9,9 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.avenga.config.ConfigManager;
-import org.avenga.config.WriterOutputStream;
 
-import static org.avenga.config.WriterOutputStream.requestCapture;
-import static org.avenga.config.WriterOutputStream.responseCapture;
-import static org.avenga.data.Endpoints.*;
+import static org.avenga.reporting.WriterOutputStream.requestCapture;
+import static org.avenga.reporting.WriterOutputStream.responseCapture;
 
 public class BaseClient {
 

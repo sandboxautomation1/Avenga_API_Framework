@@ -1,6 +1,6 @@
 package org.avenga.base;
 
-import org.avenga.config.ExtentManager;
+import org.avenga.reporting.ExtentManager;
 import org.avenga.utils.FileUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;

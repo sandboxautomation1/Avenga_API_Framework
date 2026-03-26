@@ -3,13 +3,13 @@ package org.avenga.services;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.avenga.client.BaseClient;
-import org.avenga.config.WriterOutputStream;
+import org.avenga.reporting.WriterOutputStream;
 import org.avenga.data.Endpoints;
 
 import java.io.IOException;
 
-import static org.avenga.config.WriterOutputStream.writeRequestLog;
-import static org.avenga.config.WriterOutputStream.writeResponseLog;
+import static org.avenga.reporting.WriterOutputStream.writeRequestLog;
+import static org.avenga.reporting.WriterOutputStream.writeResponseLog;
 
 
 public class Users {

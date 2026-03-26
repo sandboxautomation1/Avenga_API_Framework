@@ -1,4 +1,4 @@
-package org.avenga.config;
+package org.avenga.reporting;
 
 import com.aventstack.extentreports.ExtentTest;
 
