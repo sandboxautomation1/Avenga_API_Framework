@@ -22,12 +22,12 @@ jobs:
         run: docker build -t api-tests .
 
       - name: Run tests in Docker
-        run: docker run api-tests
+        run: docker run --name api-container -v ${{ github.workspace }}/test-output:/app/test-output api-tests
 
       - name: Copy reports from container
         run: |
             docker run --name api-container api-tests
-            docker cp api-container:/app/test-output ./test-output
+            docker create --name temp-container api-tests
             docker rm temp-container
 
       - name: Upload test report
