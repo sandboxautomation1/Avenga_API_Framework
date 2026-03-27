@@ -34,17 +34,6 @@ failsafe-reports/
 
 # =========================
 
-# Reports (Extent, Allure, etc.)
-
-# =========================
-
-extent-report/
-allure-results/
-allure-report/
-*.html
-
-# =========================
-
 # Logs
 
 # =========================
@@ -82,14 +71,6 @@ out/
 .classpath
 .project
 .settings/
-
-# =========================
-
-# VS Code
-
-# =========================
-
-.vscode/
 
 # =========================
 
