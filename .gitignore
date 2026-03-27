@@ -28,6 +28,7 @@ release.properties
 # =========================
 
 test-output/
+test-output-archive/
 surefire-reports/
 failsafe-reports/
 
