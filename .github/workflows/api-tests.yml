@@ -22,7 +22,7 @@ jobs:
         run: docker build -t api-tests .
 
       - name: Run tests in Docker
-        run: docker run -v ${{ github.workspace }}/test-output:/app/test-output api-tests
+        run: docker run -e TZ=Europe/Sofia -v ${{ github.workspace }}/test-output:/app/test-output api-tests
 
       - name: Copy reports from container
         run: |
