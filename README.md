@@ -78,7 +78,7 @@
 
 1. <code>src/main/java/org.avenga/</code> - Core Framework Layer
 <br>
-2. <p>
+
 This layer contains the main logic of the framework.
 <br>
    - <code>client/</code> Contains class responsible for request and response specifications
@@ -88,7 +88,7 @@ This layer contains the main logic of the framework.
    - <code>reporting</code> Manages test reporting via Extent Reports.
    - <code>services/</code> Acts as the API interaction layer.
    - <code>utils/</code> Contains helper and utility classes.
-</p>
+
 <br><br>
    
 2. <code>src/test/java/org.avenga/</code> - Test Layer
