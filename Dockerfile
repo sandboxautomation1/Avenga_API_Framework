@@ -15,6 +15,4 @@ FROM maven:3.9.9-eclipse-temurin-17
 WORKDIR /app
 COPY --from=builder /app /app
 
-ENV BASE_URL=https://fakerestapi.azurewebsites.net
-
 CMD ["mvn", "test", "-Dsurefire.suiteXmlFiles=src/test/java/resources/testng.xml"]
