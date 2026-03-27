@@ -26,9 +26,9 @@ jobs:
 
       - name: Copy reports from container
         run: |
-          docker create --name temp-container api-tests
-          docker cp temp-container:/app/test-output/. ./test-output
-          docker rm temp-container
+            docker run --name api-container api-tests
+            docker cp api-container:/app/test-output ./test-output
+            docker rm temp-container
 
       - name: Upload test report
         if: always()
