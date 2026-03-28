@@ -23,8 +23,17 @@ jobs:
 
       - name: Run tests in Docker
         run: docker run -v ${{ github.workspace }}/test-output:/app/test-output api-tests
-      - name: Prepare report for GitHub Pages
-        run:  mkdir public cp -r test-output/* public/
+
+      - name: Copy report
+        run: |
+          New-Item -ItemType Directory -Force -Path public
+          Copy-Item -Path test-output\* -Destination public -Recurse
+
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+            branch: gh-pages
+            folder: ./test-output
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
