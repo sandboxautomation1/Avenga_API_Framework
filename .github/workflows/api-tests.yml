@@ -42,8 +42,8 @@ jobs:
           name: TestNG Report
           path: test-output
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./test-output
+            branch: gh-pages
+            folder: ./test-output
