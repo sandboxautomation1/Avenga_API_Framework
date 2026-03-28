@@ -42,8 +42,9 @@ jobs:
           name: TestNG Report
           path: test-output
 
-      - name: Deploy pages
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+      - name: Deploy Extent Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
         with:
-            branch: gh-pages
-            folder: ./test-output
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./test-output
