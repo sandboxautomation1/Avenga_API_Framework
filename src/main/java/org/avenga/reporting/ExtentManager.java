@@ -28,7 +28,7 @@ public class ExtentManager {
             sparkReporter.config().setProtocol(Protocol.HTTPS);
 
             File logo = new File(REPORT_LOGO_FILE);
-            sparkReporter.config().setReportName("<img src='logo.png'/>");
+            sparkReporter.config().setReportName("<img src='test-output/logo.png.png'/>");
             sparkReporter.config().setCss(".header { background-color: #fff !important; }" +
                     ".badge { color: black !important; }" +
                     ".badge-primary { background-color: #fff !important; }" +
