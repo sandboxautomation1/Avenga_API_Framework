@@ -2,7 +2,7 @@ name: API Automation Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-test:
@@ -12,38 +12,38 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Fix git long paths
+        run: git config --system core.longpaths true
+
       - name: Set up JDK 22
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '22'
+          distribution: temurin
+          java-version: 22
 
       - name: Build Docker image
         run: docker build -t api-tests .
 
       - name: Run tests in Docker
-        run: docker run -v ${{ github.workspace }}/test-output:/app/test-output api-tests
+        run: |
+          docker run `
+            -v "${{ github.workspace }}\test-output:/app/test-output" `
+            api-tests
 
-      - name: Copy report
+      - name: Prepare report (PowerShell)
         run: |
           New-Item -ItemType Directory -Force -Path public
           Copy-Item -Path test-output\* -Destination public -Recurse
 
-      - name: Test Report Generation
+      - name: Upload TestNG Report
         uses: actions/upload-artifact@v4
-        if: success() || failure()
+        if: always()
         with:
-          name: TestNG Report                 # Name of the folder
+          name: TestNG Report
           path: test-output
-
-      - name: Deploy pages
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          branch: gh-pages
-          folder: ./test-output
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./test-output
