@@ -8,8 +8,10 @@
 * [Architecture](#architecture)
   * [Project Structure](#project-structure)
   * [Project Folders](#-project-folders)
-* [Getting Started](#getting-started)
+* [How to Run Tests](#how-to-run-tests)
+* [Execution Flow](#execution-flow)
 * [Reporting](#reporting)
+* [CI/CD Pipeline](#cicd-pipeline)
 
 ---
 
@@ -98,7 +100,7 @@ This layer contains the main logic of the framework.
 
 ---
 
-## Getting Started
+## How to Run Tests
 
 **Step 1:** Clone the repository:
 
@@ -111,6 +113,23 @@ git clone https://github.com/sandboxautomation1/Avenga_API_Framework.git
 ```bash
    mvn clean test
 ```
+
+**Step 3:** Run all tests with environment variable:
+
+```bash
+   mvn test -DbaseUrl=https://fakerestapi.azurewebsites.net
+```
+
+---
+
+## Execution Flow
+
+1. TestNG triggers test execution 
+2. Test calls the service layer 
+3. Service layer sends API request via RestAssured 
+4. Response is returned 
+5. Assertions are performed in the test 
+6. Results are logged in Extent Reports
 
 ---
 
@@ -137,5 +156,17 @@ After opening the file, the dashboard will be displayed. On the left side you wi
 
 <b>Response Details</b>
 ![](https://private-user-images.githubusercontent.com/270893907/570441200-fce92afd-ebc3-46af-b061-329fc6794e5f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAzNzIsIm5iZiI6MTc3NDYyMDA3MiwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMjAwLWZjZTkyYWZkLWViYzMtNDZhZi1iMDYxLTMyOWZjNjc5NGU1Zi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxNDAxMTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02ODZiNTg0MjhkNWQxNGJlMzYyNGFlNGE0YmY5MDFjN2ZlN2EyMWFmMmIxMDg1MzdhNzEwODk0OTVlY2E0MGVjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nSH9lXJlWNcP_jUtMjf8t9YtBC97xKAAQKWUR5SG8-4)
+
+---
+
+## CI/CD Pipeline
+
+CI/CD is implemented using GitHub Actions.
+
+Pipeline steps:
+- Build project
+- Build Docker image
+- Run tests inside container
+- Generate test report
 
 
