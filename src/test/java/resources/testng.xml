@@ -5,15 +5,23 @@
         <listener class-name="org.avenga.reporting.ExtentListener"/>
     </listeners>
 
-    <test verbose="2" preserve-order="true" name="[TS_001] Books">
+    <test verbose="2" preserve-order="true" name="Books">
         <classes>
-            <class name="org.avenga.tests.TS_001_Books"/>
+            <class name="org.avenga.tests.books.TS_001_GetBooks"/>
+            <class name="org.avenga.tests.books.TS_002_GetBookById"/>
+            <class name="org.avenga.tests.books.TS_003_PostBooks"/>
+            <class name="org.avenga.tests.books.TS_004_PutBook"/>
+            <class name="org.avenga.tests.books.TS_005_DeleteBook"/>
         </classes>
     </test>
 
-    <test verbose="2" preserve-order="true" name="[TS_002] Authors">
+    <test verbose="2" preserve-order="true" name="Authors">
         <classes>
-            <class name="org.avenga.tests.TS_002_Authors"/>
+            <class name="org.avenga.tests.authors.TS_001_GetAuthors"/>
+            <class name="org.avenga.tests.authors.TS_002_GetAuthorById"/>
+            <class name="org.avenga.tests.authors.TS_003_PostAuthors"/>
+            <class name="org.avenga.tests.authors.TS_004_PutAuthor"/>
+            <class name="org.avenga.tests.authors.TS_005_DeleteAuthor"/>
         </classes>
     </test>
 </suite>

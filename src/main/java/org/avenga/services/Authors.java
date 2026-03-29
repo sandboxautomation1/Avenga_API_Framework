@@ -52,7 +52,7 @@ public class Authors {
 
 
     /** Update an existing author’s details */
-    public Response PUT_UpdateAuthorById(int expectedStatusCode, JsonObject body, String authorId) throws IOException {
+    public Response PUT_UpdateAuthorById(int expectedStatusCode, JsonObject body, int authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
                 .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))
@@ -71,7 +71,7 @@ public class Authors {
 
 
     /** Delete an author by their ID */
-    public Response DELETE_DeleteAuthorById(int expectedStatusCode, String authorId) throws IOException {
+    public Response DELETE_DeleteAuthorById(int expectedStatusCode, int authorId) throws IOException {
         Response response = (Response) RestAssured
                 .given()
                 .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))

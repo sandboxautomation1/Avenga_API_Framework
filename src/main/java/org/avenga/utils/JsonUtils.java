@@ -21,4 +21,25 @@ public class JsonUtils {
     public static JsonNode convertToJsonNode(JsonObject json) throws JsonProcessingException {
         return mapper.readTree(json.toString());
     }
+
+    // ==========================
+    // Jayway
+    // ==========================
+
+    public static Object getValueFromResponse(String response, String path) throws JsonProcessingException {
+        return JsonPath.parse(response).read(path);
+    }
+
+
+    // ==========================
+    // Gson
+    // ==========================
+
+    public static JsonObject convertToJsonObject(String json) throws JsonProcessingException {
+        return gson.fromJson(json, JsonObject.class);
+    }
+
+    public static JsonArray getArrayFromResponse(JsonObject response, String path) throws JsonProcessingException {
+        return response.getAsJsonArray(path);
+    }
 }

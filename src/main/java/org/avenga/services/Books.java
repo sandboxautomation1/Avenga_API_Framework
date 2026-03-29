@@ -71,7 +71,7 @@ public class Books {
 
 
     /** Delete a book by its ID */
-    public Response DELETE_DeleteBookById(int expectedStatusCode, String id) throws IOException {
+    public Response DELETE_DeleteBookById(int expectedStatusCode, int id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
                 .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS_BY_ID))
