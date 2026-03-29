@@ -25,6 +25,7 @@ jobs:
         run: docker build -t api-tests .
 
       - name: Run tests in Docker
+        if: always()
         run: |
           docker run `
             -v "${{ github.workspace }}\test-output:/app/test-output" `
