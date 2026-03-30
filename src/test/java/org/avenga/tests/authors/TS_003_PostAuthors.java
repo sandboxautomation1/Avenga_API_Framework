@@ -68,4 +68,18 @@ public class TS_003_PostAuthors extends BaseTest {
         JsonObject body = request.buildAuthorPayload(DataUtils.getNumber(), null, DataUtils.getFirstName(), DataUtils.getLastName());
         authors.POST_AddAuthor(400, body);
     }
+
+
+    @Test(testName = "[TC_020_Authors] Invalid book ID", description = "Validate that after sending request with invalid book ID the response status code is 400", groups = { "regression" }, priority = 7)
+    public void TC_020_InvalidBookId() throws Exception {
+        JsonObject body = request.buildAuthorPayload(DataUtils.getNumber(), 999999, DataUtils.getFirstName(), DataUtils.getLastName());
+        authors.POST_AddAuthor(400, body);
+    }
+
+
+    @Test(testName = "[TC_021_Authors] Empty body", description = "Validate that after sending request with empty request body the response status code is 400", groups = { "regression" }, priority = 8)
+    public void TC_021_NegativeBookId() throws Exception {
+        JsonObject body = new JsonObject();
+        authors.POST_AddAuthor(400, body);
+    }
 }

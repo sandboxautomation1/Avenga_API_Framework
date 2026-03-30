@@ -11,8 +11,6 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public class AuthorRequest {
 
-    // GETTERS & SETTERS
-
     private int id;
     private int idBook;
     private String firstName;
