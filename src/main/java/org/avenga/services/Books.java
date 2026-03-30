@@ -34,7 +34,7 @@ public class Books {
 
 
     /** Retrieve details of a specific book by its ID */
-    public Response GET_BookById(int expectedStatusCode, int id) throws IOException {
+    public Response GET_BookById(int expectedStatusCode, String id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
                 .spec(BaseClient.getRequestSpecification(Endpoints.BOOKS_BY_ID))

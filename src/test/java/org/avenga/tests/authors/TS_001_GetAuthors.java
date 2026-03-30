@@ -38,12 +38,7 @@ public class TS_001_GetAuthors extends BaseTest {
 
     @Test(testName = "[TC_002_Authors] Schema Validation", description = "Validate that the response code is 200 and all fields exists", groups = { "smoke", "acceptance" }, priority = 1)
     public void TC_002_SchemaValidation() throws Exception {
-        AuthorResponse response = authors.GET_AllAuthors(200).then().extract().as(AuthorResponse.class);
-
-        assertThat(response.getId(), is(1));
-        assertThat(response.getFirstName(), notNullValue());
-        assertThat(response.getLastName(), notNullValue());
-        assertThat(response.getIdBook(), notNullValue());
+        authors.GET_AllAuthors(200).then().body("id", everyItem(greaterThan(0))).body("idBook", everyItem(notNullValue())).body("firstName", everyItem(notNullValue())).body("lastName", everyItem(notNullValue()));
     }
 
 

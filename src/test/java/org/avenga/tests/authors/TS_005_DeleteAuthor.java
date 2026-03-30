@@ -30,7 +30,7 @@ public class TS_005_DeleteAuthor extends BaseTest {
 
     @Test(testName = "[TC_027_Authors] Delete already deleted author", description = "Validate that after sending request for delete already deleted author the response code is 404", groups = { "smoke" }, priority = 2)
     public void TC_027_DeleteTwice() throws Exception {
-        authors.GET_AuthorById(200, 1);
+        authors.DELETE_DeleteAuthorById(200, 1);
         authors.DELETE_DeleteAuthorById(404, 1);
     }
 }

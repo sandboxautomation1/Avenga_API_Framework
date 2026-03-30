@@ -34,7 +34,7 @@ public class Authors {
 
 
     /** Retrieve details of a specific author by their ID */
-    public Response GET_AuthorById(int expectedStatusCode, Integer id) throws IOException {
+    public Response GET_AuthorById(int expectedStatusCode, String id) throws IOException {
         Response response = (Response) RestAssured
                 .given()
                 .spec(BaseClient.getRequestSpecification(Endpoints.AUTHORS_BY_ID))
