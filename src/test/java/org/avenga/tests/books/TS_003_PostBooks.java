@@ -8,9 +8,11 @@ import org.avenga.models.response.BookResponse;
 import org.avenga.reporting.ExtentListener;
 import org.avenga.services.Books;
 import org.avenga.utils.DataUtils;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +22,13 @@ import static org.hamcrest.Matchers.*;
 @Listeners(ExtentListener.class)
 public class TS_003_PostBooks extends BaseTest {
 
-    private final Books books = new Books();
+    protected Books books;
+
+    @BeforeClass
+    public void beforeClass() throws IOException {
+        books = new Books();
+    }
+
     private final BookRequest request = new BookRequest();
 
 

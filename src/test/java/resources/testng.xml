@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite" parallel="tests" thread-count="2">
 
     <listeners>
         <listener class-name="org.avenga.reporting.ExtentListener"/>
     </listeners>
 
-    <test verbose="2" preserve-order="true" name="Books">
+    <test preserve-order="true" name="Books">
         <classes>
             <class name="org.avenga.tests.books.TS_001_GetBooks"/>
             <class name="org.avenga.tests.books.TS_002_GetBookById"/>
             <class name="org.avenga.tests.books.TS_003_PostBooks"/>
             <class name="org.avenga.tests.books.TS_004_PutBook"/>
             <class name="org.avenga.tests.books.TS_005_DeleteBook"/>
-        </classes>
-    </test>
-
-    <test verbose="2" preserve-order="true" name="Authors">
-        <classes>
             <class name="org.avenga.tests.authors.TS_001_GetAuthors"/>
             <class name="org.avenga.tests.authors.TS_002_GetAuthorById"/>
             <class name="org.avenga.tests.authors.TS_003_PostAuthors"/>

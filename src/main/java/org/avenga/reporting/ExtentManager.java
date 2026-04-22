@@ -16,18 +16,16 @@ public class ExtentManager {
     private static ExtentReports extent;
 
     public static ExtentReports getInstance() {
-
         if (extent == null) {
             ExtentSparkReporter sparkReporter = new ExtentSparkReporter(REPORT_HTML_FILE).
             viewConfigurer()
                     .viewOrder()
                     .as(new ViewName[] { ViewName.DASHBOARD, ViewName.CATEGORY, ViewName.TEST })
-                    .apply();//specify location of the report
+                    .apply();
             sparkReporter.config().setDocumentTitle("Automation Report"); // Title of report
             sparkReporter.config().setEncoding("utf-8");
             sparkReporter.config().setProtocol(Protocol.HTTPS);
 
-            File logo = new File(REPORT_LOGO_FILE);
             sparkReporter.config().setReportName("<img src='" + REPORT_LOGO_FILE + "' />");
             sparkReporter.config().setCss(".header { background-color: #fff !important; }" +
                     ".badge { color: black !important; }" +
@@ -40,7 +38,6 @@ public class ExtentManager {
             extent.setSystemInfo("User Name", System.getProperty("user.name"));
             extent.setSystemInfo("Environemnt", "QA");
         }
-
         return extent;
     }
 }

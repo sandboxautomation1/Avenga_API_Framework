@@ -19,9 +19,5 @@ public class ExtentTestManager {
                         + "</pre>");
         test.set(extentTest);
     }
-
-    public static void endTest() {
-        test.remove();
-    }
 }
 

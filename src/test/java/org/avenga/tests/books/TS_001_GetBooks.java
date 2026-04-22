@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.*;
 @Listeners(ExtentListener.class)
 public class TS_001_GetBooks extends BaseTest {
 
-    private final Books books = new Books();
+    protected Books books = new Books();
 
 
     @Test(testName = "[TC_001_Books] Get all books", description = "Validate that response code is 200 and the response body is not empty", groups = { "smoke" }, priority = 0)

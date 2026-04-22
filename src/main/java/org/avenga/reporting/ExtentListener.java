@@ -11,11 +11,15 @@ public class ExtentListener implements ITestListener {
 
     @Getter
     @Setter
-    private static String testName;
+    public static String testName;
 
     @Getter
     @Setter
-    private static String testDescription;
+    public static String testDescription;
+
+    @Getter
+    @Setter
+    public static String testCategory;
 
 
     @Override
@@ -43,15 +47,14 @@ public class ExtentListener implements ITestListener {
 
         ExtentTestManager.startTest();
         String[] groups = result.getMethod().getGroups();
-        String category = groups[0];
-        ExtentTestManager.getTest().assignCategory(category);
+        testCategory = groups[0];
+        ExtentTestManager.getTest().assignCategory(testCategory);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         ExtentTestManager.getTest().createNode("Request").info("<pre><center><b>* * * * * * * *    R E Q U E S T    * * * * * * * *</b></center></br></br>" + WriterOutputStream.getRequestLog() + "</br></pre>");
         ExtentTestManager.getTest().createNode("Response").pass("<pre><center><b>* * * * * * * *    R E S P O N S E    * * * * * * * *</b></center></br></br>" + WriterOutputStream.getResponseLog() + "</br></pre>");
-
         }
 
 
@@ -59,7 +62,6 @@ public class ExtentListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         ExtentTestManager.getTest().createNode("Request").info("<pre><center><b>* * * * * * * *    R E Q U E S T    * * * * * * * *</b></center></br></br>" + WriterOutputStream.getRequestLog() + "</br></pre>");
         ExtentTestManager.getTest().createNode("Response").fail("<pre><center><b>* * * * * * * *    R E S P O N S E    * * * * * * * *</b></center></br></br>" + WriterOutputStream.getResponseLog() + "</br>" + result.getThrowable().getMessage() + "</br></pre>");
-
         }
 
 
