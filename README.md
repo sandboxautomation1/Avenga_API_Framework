@@ -1,174 +1,285 @@
-![This is an image](https://images.teamtailor-cdn.com/images/s3/teamtailor-production/gallery_picture-v6/image_uploads/27de8d15-0ed0-43a9-bb65-5c316ed8775f/original.png)
+![This is an image](https://i.ibb.co/qFjKB6Sy/Photos-uk-TC5-Us92-K.png)
 
----
+# AvengaAPI Automation Framework
 
-## Table Of Contents
+An API automation framework for testing REST APIs with Java, Rest Assured, and TestNG. The project validates the functionality, structure, and content of responses from the [Fake REST API](https://fakerestapi.azurewebsites.net/). Tests can be executed locally with Maven, inside a Docker container, or automatically through GitHub Actions.
 
-* [Tech Stack](#tech-stack)
-* [Architecture](#architecture)
-  * [Project Structure](#project-structure)
-  * [Project Folders](#-project-folders)
-* [How to Run Tests](#how-to-run-tests)
-* [Execution Flow](#execution-flow)
-* [Reporting](#reporting)
-* [CI/CD Pipeline](#cicd-pipeline)
+## Key Capabilities
 
----
+The framework supports the following checks:
 
-## Tech Stack
+- retrieving collections of books and authors;
+- retrieving a book or author by ID;
+- creating, updating, and deleting books and authors;
+- validating HTTP status codes;
+- verifying that responses are not empty and contain required fields;
+- validating ID uniqueness;
+- validating ISO 8601 date formats;
+- performing basic response-time checks;
+- validating JSON schemas using the available schema files;
+- recording request and response logs in an HTML report.
 
-| Technology     | Purpose                         |
-|----------------|---------------------------------|
-| Java           | Core programming language       |
-| Selenium       | UI automation                   |
-| Rest Assured   | API testing                     |
-| TestNG         | Test orchestration              |
-| Maven          | Build and dependency management |
-| Extent Reports | Rich HTML reporting             |
-| Docker         | Manage containers               |
+## Technology Stack
 
----
 
-## Architecture
+| Technology           | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| Java 17              | Main programming language and project target version |
+| Maven                | Dependency management and test execution             |
+| Rest Assured         | Sending HTTP requests and validating API responses   |
+| TestNG               | Test organization, grouping, and execution           |
+| Jackson and JsonPath | JSON serialization, deserialization, and processing  |
+| Lombok               | Reducing boilerplate code                            |
+| JavaFaker            | Generating test data                                 |
+| ExtentReports        | Generating HTML test reports                         |
+| Docker               | Isolated test execution                              |
+| GitHub Actions       | CI/CD execution on pushes to`main`                   |
 
-### Project Structure
+## Requirements
 
-```
-📁 src/
-├── 📁 main/
-│   └── 📁 java/
-│       └── 📁 org.avenga/
-│           ├── 📁 client/
-│           │   └── BaseClient.java
-│           ├── 📁 config/
-│           │   └── ConfigManager.java
-│           ├── 📁 data/
-│           │   ├── Endpoints.java
-│           │   └── FrameworkConstants.java
-│           ├── 📁 models/
-│           │   ├── 📁 request/
-│           │   │   ├── AuthorRequest.java
-│           │   │   └── BookRequest.java
-│           │   └── 📁 response/
-│           │       ├── AuthorResponse.java
-│           │       └── BookResponse.java
-│           ├── 📁 reporting/
-│           │   ├── ExtentListener.java
-│           │   ├── ExtentManager.java
-│           │   ├── ExtentTestManager.java
-│           │   └── WriterOutputStream.java
-│           ├── 📁 services/
-│           │   ├── Authors.java
-│           │   ├── Books.java
-│           │   └── Users.java
-│           └── 📁 utils/
-│               ├── DataUtils.java
-│               ├── FileUtils.java
-│               └── JsonUtils.java
-└──📁 tests/
-    └── 📁 java/
-        ├── 📁 base/
-        │    └── JsonUtils.java
-        ├── 📁 tests/
-        │    ├── TS_001_Books.java
-        │    └── TS_002_Authors.java
-        └── 📁 resources/
-             └── testng.xml
+The following tools are required for local execution:
+
+- JDK 17 or a compatible newer Java version;
+- Apache Maven 3.8 or newer;
+- internet access for calling the test API and downloading Maven dependencies.
+
+Docker is required only when the tests are executed in a container. CI/CD execution requires Docker and a self-hosted GitHub Actions runner, according to the current workflow configuration.
+
+Verify the installation with:
+
+```bash
+java -version
+mvn -version
+docker --version
 ```
 
-### 📂 Project Folders
+## Project Structure
 
-1. <code>src/main/java/org.avenga/</code> - Core Framework Layer
-<br>
+```text
+.
+├── pom.xml
+├── Dockerfile
+├── README.md
+├── .github/
+│   └── workflows/
+│       └── api-tests.yml
+├── src/
+│   ├── main/java/org/avenga/
+│   │   ├── client/
+│   │   │   └── BaseClient.java
+│   │   ├── config/
+│   │   │   └── ConfigManager.java
+│   │   ├── data/
+│   │   │   ├── Endpoints.java
+│   │   │   └── FrameworkConstants.java
+│   │   ├── models/
+│   │   │   ├── request/
+│   │   │   └── response/
+│   │   ├── reporting/
+│   │   ├── services/
+│   │   │   ├── Authors.java
+│   │   │   ├── Books.java
+│   │   │   └── Users.java
+│   │   └── utils/
+│   └── test/java/
+│       ├── org/avenga/base/
+│       ├── org/avenga/tests/
+│       │   ├── authors/
+│       │   └── books/
+│       └── resources/
+│           ├── schemas/
+│           └── testng.xml
+└── test-output/
+```
 
-This layer contains the main logic of the framework.
-<br>
-   - <code>client/</code> Contains class responsible for request and response specifications
-   - <code>config/</code> Contains class that handles configuration management.
-   - <code>data/</code> Classes which contains API endpoints and framework constants are here. 
-   - <code>models/</code> Represents request and response data structures.
-   - <code>reporting</code> Manages test reporting via Extent Reports.
-   - <code>services/</code> Acts as the API interaction layer.
-   - <code>utils/</code> Contains helper and utility classes.
+### Responsibilities of the Main Layers
 
-<br><br>
-   
-2. <code>src/test/java/org.avenga/</code> - Test Layer
-   - <code>base/</code> Base test class used for setup and teardown.
-   - <code>tests</code> Contains TestNG test classes.
-<br>
+`client` contains the shared request and response specifications. It defines the base URL, JSON content type, and HTTP traffic logging.
 
----
+`config` manages execution settings. `data` contains API endpoints and framework constants. `models` describes request and response objects.
 
-## How to Run Tests
+`services` is the API interaction layer. It provides methods for calling book, author, and user endpoints. `tests` contains the TestNG test scenarios, while `reporting` generates the ExtentReports output.
 
-**Step 1:** Clone the repository:
+## Base URL Configuration
+
+By default, the tests use:
+
+```text
+https://fakerestapi.azurewebsites.net
+```
+
+The value of `BASE_URL` is resolved using the following priority:
+
+1. Java system property;
+2. environment variable;
+3. the default value from `Endpoints.BASE_URL`.
+
+Example using a Java system property:
+
+```bash
+mvn clean test -DBASE_URL=https://fakerestapi.azurewebsites.net
+```
+
+Example using an environment variable on Linux/macOS:
+
+```bash
+BASE_URL=https://fakerestapi.azurewebsites.net mvn clean test
+```
+
+Example using PowerShell:
+
+```powershell
+$env:BASE_URL = "https://fakerestapi.azurewebsites.net"
+mvn clean test
+```
+
+> Use the name `BASE_URL` in uppercase. This is the key read by `ConfigManager`.
+
+## Running the Tests
+
+Clone the repository and navigate to its directory:
 
 ```bash
 git clone https://github.com/sandboxautomation1/Avenga_API_Framework.git
+cd Avenga_API_Framework
 ```
 
-**Step 2:** Run all tests:
+Run the complete TestNG suite:
 
 ```bash
-   mvn clean test
+mvn clean test
 ```
 
-**Step 3:** Run all tests with environment variable:
+Maven Surefire uses the configuration from `src/test/java/resources/testng.xml`. The current suite executes the book and author tests with up to two parallel TestNG threads.
+
+To run the tests again without cleaning the build artifacts, use:
 
 ```bash
-   mvn test -DbaseUrl=https://fakerestapi.azurewebsites.net
+mvn test
 ```
 
----
+To run a specific TestNG class, use the standard Surefire configuration, for example:
 
-## Execution Flow
+```bash
+mvn -Dtest=TS_001_GetBooks test
+```
 
-1. TestNG triggers test execution 
-2. Test calls the service layer 
-3. Service layer sends API request via RestAssured 
-4. Response is returned 
-5. Assertions are performed in the test 
-6. Results are logged in Extent Reports
+## Test Coverage
 
-![](https://private-user-images.githubusercontent.com/270893907/573496918-d9d8764c-305c-4180-bf8b-cfa9f5cabced.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzUyMTQ5OTksIm5iZiI6MTc3NTIxNDY5OSwicGF0aCI6Ii8yNzA4OTM5MDcvNTczNDk2OTE4LWQ5ZDg3NjRjLTMwNWMtNDE4MC1iZjhiLWNmYTlmNWNhYmNlZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwNDAzJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDQwM1QxMTExMzlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mOWM4ZWExYjFhZmNmNDBlZGRjZTEzYWQ0MTk2YmE2ZmMxYmIxZGEzZDQyYmZhZjg4OWM4ZTY3Mjg2MDg3MjdkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.VLECu4dbQZOHmJBv18RTOY2hSVV2hTU0Yycvc8zuP1A)
+The tests are organized into the following areas:
 
----
 
-## Reporting
-<br>
+| Area    | Covered operations and validations                                                                                                          |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Books   | GET all, GET by ID, POST, PUT, DELETE, status code, response body, required fields, unique IDs, page count, publish date, and response time |
+| Authors | GET all, GET by ID, POST, PUT, DELETE, status code, response body, required fields, and unique IDs                                          |
+| Users   | Service layer and endpoint definitions are available for extending the test coverage                                                        |
 
-HTML file with test results are automatically generated under <code>/test-output</code>.
-After opening the file, the dashboard will be displayed. On the left side you will see buttons for Dashboard, Categories and Tests List.
-#### Dashboard
-![](https://private-user-images.githubusercontent.com/270893907/570441202-338adfb7-d8e6-46a8-ac6d-20a43c62684a.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAwOTQsIm5iZiI6MTc3NDYxOTc5NCwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMjAyLTMzOGFkZmI3LWQ4ZTYtNDZhOC1hYzZkLTIwYTQzYzYyNjg0YS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxMzU2MzRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zNWNiZDJkOTYyMDgzMTk0ZTA3Yjk5YmVlMWY5ZTQzYmUxMTk5YzllOWM3ZGMwNjc5YmY1NmNlNGNmNTU4YzY1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.2-OKN5MnqDBaPLx6i0oVnj9kTnhC3dq2BXMHxx6XO7g)
-<br>
+TestNG tests use groups such as `smoke`, `acceptance`, and `regression`. These groups can be used to separate fast checks, acceptance checks, and regression scenarios.
 
-#### Categories
-![](https://private-user-images.githubusercontent.com/270893907/570441201-2188aa4c-3512-446c-9395-4914f979e66d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAwOTQsIm5iZiI6MTc3NDYxOTc5NCwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMjAxLTIxODhhYTRjLTM1MTItNDQ2Yy05Mzk1LTQ5MTRmOTc5ZTY2ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxMzU2MzRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03ODY1MDU4NWJjNzgwMzAxMWQzZDY2NDg2MDY3OWJmNmI4YTk4ZTcyY2M3MDhmYmIyYzE4OTk0OTVhMmVkY2I5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.QECSt6IMt_LoPAHxVLH6X09aA50LO_j7xc6zgMoBL1I)
+## Test Reports
 
-#### Tests List
+After the tests finish, the reports are stored in:
 
-![](https://private-user-images.githubusercontent.com/270893907/570441199-3f092f93-eaca-433f-8d66-2a51aad9dd17.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAzNzIsIm5iZiI6MTc3NDYyMDA3MiwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMTk5LTNmMDkyZjkzLWVhY2EtNDMzZi04ZDY2LTJhNTFhYWQ5ZGQxNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxNDAxMTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kZDU2NDM4OTRmZWU1NTdmZWZlZDYxOTBhNmEzMTVjZDAyNmI2Mjg2MDVkOTY4ZWRmY2QxNDQ3NmFkMzNkMTNkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.TpWhkaw5wpEw_Mehgvcyv5TPLvOD1QFuqa5mYqN3Eaw)
+```text
+test-output/
+```
 
-<br> 
+Open `test-output/index.html` in a browser. The report contains:
 
-<b>Request Details</b>
-![](https://private-user-images.githubusercontent.com/270893907/570441203-17fec21f-c5b1-4c66-b7c0-6aa29762e9d2.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAzNzIsIm5iZiI6MTc3NDYyMDA3MiwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMjAzLTE3ZmVjMjFmLWM1YjEtNGM2Ni1iN2MwLTZhYTI5NzYyZTlkMi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxNDAxMTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05NjJkZjk2MGJlZDlkZDIyYzFjNTc5ZjQyNGY3MDhiZDk5Y2ZiNGNjYTkwMDlmNzMxOWFhZDY2YmVmOTE3MTMzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.5MaGiToEbcb0lrakN054_h-xiRcpOR3QjFAssUgri9c)
+- an overall execution summary;
+- a list of tests and their categories;
+- the status of each test;
+- request and response logs;
+- error details for failed tests.
 
-<b>Response Details</b>
-![](https://private-user-images.githubusercontent.com/270893907/570441200-fce92afd-ebc3-46af-b061-329fc6794e5f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzQ2MjAzNzIsIm5iZiI6MTc3NDYyMDA3MiwicGF0aCI6Ii8yNzA4OTM5MDcvNTcwNDQxMjAwLWZjZTkyYWZkLWViYzMtNDZhZi1iMDYxLTMyOWZjNjc5NGU1Zi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMzI3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDMyN1QxNDAxMTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02ODZiNTg0MjhkNWQxNGJlMzYyNGFlNGE0YmY5MDFjN2ZlN2EyMWFmMmIxMDg1MzdhNzEwODk0OTVlY2E0MGVjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nSH9lXJlWNcP_jUtMjf8t9YtBC97xKAAQKWUR5SG8-4)
+Additional Surefire XML reports are generated in:
 
----
+```text
+target/surefire-reports/
+```
+
+## Running with Docker
+
+The Dockerfile uses Maven with Eclipse Temurin 17 and contains two stages. The first stage prepares the dependencies and compiles the project. The second stage executes the tests.
+
+Build the Docker image:
+
+```bash
+docker build -t avenga-api-tests .
+```
+
+Run the tests in a container:
+
+```bash
+docker run --rm -v "$(pwd)/test-output:/app/test-output" avenga-api-tests
+```
+
+For PowerShell, use:
+
+```powershell
+docker run --rm -v "${PWD}/test-output:/app/test-output" avenga-api-tests
+```
+
+To use a different API URL, pass the system property to Maven inside the container:
+
+```bash
+docker run --rm \
+  -v "$(pwd)/test-output:/app/test-output" \
+  avenga-api-tests \
+  mvn test -DBASE_URL=https://fakerestapi.azurewebsites.net
+```
 
 ## CI/CD Pipeline
 
-CI/CD is implemented using GitHub Actions.
+The `.github/workflows/api-tests.yml` workflow runs on every `push` to the `main` branch. The pipeline:
 
-Pipeline steps:
-- Build project
-- Build Docker image
-- Run tests inside container
-- Generate test report
+1. checks out the repository;
+2. configures JDK 22 on the self-hosted runner;
+3. builds a Docker image named `api-tests`;
+4. runs the tests inside the Docker container;
+5. uploads `test-output` as a GitHub Actions artifact;
+6. publishes the report through GitHub Pages.
 
+The pipeline uses PowerShell syntax when starting the Docker container and preparing the report. Therefore, the runner must support Docker and PowerShell, and GitHub Pages must be enabled for the repository.
 
+## Typical Execution Flow
+
+```text
+TestNG suite
+    ↓
+Test class
+    ↓
+Service layer
+    ↓
+BaseClient request specification
+    ↓
+Rest Assured HTTP request
+    ↓
+Response specification and assertions
+    ↓
+ExtentReports request/response logs
+```
+
+## Extending the Framework
+
+To add a new endpoint, define its path in `Endpoints.java`, create or extend a service class in `services`, add request and response models when needed, and create TestNG tests in the appropriate package under `src/test/java/org/avenga/tests`.
+
+For every new validation, use a clear `testName`, `description`, and TestNG group. This makes the test easier to find in ExtentReports and to include in a dedicated smoke, acceptance, or regression suite.
+
+## License and Intended Use
+
+This project is intended for API automation demonstration and development. Before using it in a production environment, verify the availability, stability, and terms of use of the target API.
+
+## References
+
+Useful resources: [Fake REST API][1], [REST Assured][2], [TestNG][3], and [GitHub Actions][4].
+
+---
+
+**Author:** Manus AI
+
+[1]: https://fakerestapi.azurewebsites.net/
+[2]: https://rest-assured.io/
+[3]: https://testng.org/
+[4]: https://docs.github.com/en/actions
